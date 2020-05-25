@@ -1,0 +1,13 @@
+.statusStyle{
+    padding: 12px;
+    font-size: 20px;
+}
+.fa-calendar-plus{
+    color: blue;
+}
+.fa-calendar-check{
+    color: darkgreen;
+}
+.fa-calendar-times{
+    color: red;
+}

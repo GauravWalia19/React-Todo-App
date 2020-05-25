@@ -19,8 +19,9 @@ const App = () => {
         const { name,_id } = response[i];
         arr.push({
           title: name,
-          completed:false,
-          id: _id
+          status: 'new',
+          id: _id,
+          dueDate: '2020-05-25'
         });
       }
       
@@ -34,11 +35,11 @@ const App = () => {
     }
   }, [])
 
-  // toggle complete
-  const markComplete = (id) => {
+  // mark action on the todo
+  const markActionOnTodo = (actionValue, newTodos) => {
     setTodoState({todos: todoState.todos.map(todo => {
-      if(todo.id === id){
-        todo.completed = !todo.completed
+      if(newTodos.includes(todo.id)){
+        todo.status = actionValue
       }
       return todo;
     })})
@@ -49,12 +50,21 @@ const App = () => {
     setTodoState({todos: [...todoState.todos.filter(todo => todo.id!==id)] });
   }
 
+  const getTodayDate = ()=>{
+    const date = new Date();
+    let month = (date.getMonth()+1).toString().length===1 ? '0' + (date.getMonth()+1) : (date.getMonth()+1); 
+    return (date.getFullYear()+"-"+month+"-"+date.getDate());
+  }
+
   // add todo
-  const addTodo = (title) => {
+  const addTodo = (title, dueDate) => {
+    if(title===''){return}
+
     const newTodo = {
       id: uuid(),
       title,
-      completed: false
+      dueDate: dueDate==='' ? getTodayDate() : dueDate,
+      status: 'new'
     }
     setTodoState({
       todos: [...todoState.todos, newTodo]
@@ -68,7 +78,7 @@ const App = () => {
         <AddTodo addTodo={addTodo}/>
         <Todos 
         todos={todoState.todos} 
-        markComplete={markComplete}
+        markActionOnTodo={markActionOnTodo}
         delTodo={delTodo}/>
       </div>
     </div>
