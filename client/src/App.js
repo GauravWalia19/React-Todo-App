@@ -1,19 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Route}  from 'react-router-dom';
+import React,{useState,useEffect} from 'react';
 import Todos from './components/Todos';
 import Header from './components/layout/Header';
 import AddTodo from './components/AddTodo';
 import {v4 as uuid} from 'uuid';
-import About from './components/pages/About';
 import axios from 'axios';
 import './App.css';
 
-class App extends React.Component {
-  state = {
-    todos: []
-  }
+const App = () => {
+  
+  const [todoState,setTodoState] = useState({todos: []});
 
-  componentDidMount(){
+  useEffect(() => {
     axios.get('https://treasurejsapi.herokuapp.com/api/v2/search?find=a&size=10')
     .then(res => {
       const response = res.data;
@@ -27,16 +24,19 @@ class App extends React.Component {
         });
       }
       
-      this.setState({
+      setTodoState({
         todos: arr
       })
     })
     .catch()
-  }
+    return () => {
+      
+    }
+  }, [])
 
   // toggle complete
-  markComplete = (id) => {
-    this.setState({todos: this.state.todos.map(todo => {
+  const markComplete = (id) => {
+    setTodoState({todos: todoState.todos.map(todo => {
       if(todo.id === id){
         todo.completed = !todo.completed
       }
@@ -45,43 +45,34 @@ class App extends React.Component {
   }
 
   // delete todo
-  delTodo = (id) => {
-    this.setState({todos: [...this.state.todos.filter(todo => todo.id!==id)] });
+  const delTodo = (id) => {
+    setTodoState({todos: [...todoState.todos.filter(todo => todo.id!==id)] });
   }
 
   // add todo
-  addTodo = (title) => {
+  const addTodo = (title) => {
     const newTodo = {
       id: uuid(),
       title,
       completed: false
     }
-    this.setState({
-      todos: [...this.state.todos, newTodo]
+    setTodoState({
+      todos: [...todoState.todos, newTodo]
     })
   }
 
-  render(){
-    return (
-      <Router>
-        <div className="App">
-          <div className="container">
-            <Header />
-            <Route exact path="/" render={props=>(
-              <React.Fragment>
-                <AddTodo addTodo={this.addTodo}/>
-                <Todos 
-                todos={this.state.todos} 
-                markComplete={this.markComplete}
-                delTodo={this.delTodo}/>
-              </React.Fragment>
-            )} />
-            <Route path="/about" component={About} />
-          </div>
-        </div>
-      </Router>
-    );
-  }
+  return (
+    <div className="App">
+      <div className="container">
+        <Header />
+        <AddTodo addTodo={addTodo}/>
+        <Todos 
+        todos={todoState.todos} 
+        markComplete={markComplete}
+        delTodo={delTodo}/>
+      </div>
+    </div>
+  );
 }
 
 export default App;
