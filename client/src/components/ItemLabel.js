@@ -22,7 +22,8 @@ const ItemLabel = (props) => {
         margin: '2px',
         borderRadius: '5px',
         border: '1px solid #333',
-        backgroundColor: getLabelColor()
+        backgroundColor: getLabelColor(),
+        display: "inline-block"
     }
 
     const labelButtonStyle = {
@@ -30,7 +31,7 @@ const ItemLabel = (props) => {
         border: 'none',
         outline: 'none',
         cursor: 'pointer',
-        padding: '5px'
+        padding: '1px 1px 1px 6px'
     }
 
     const deleteLabel = ()=>{
