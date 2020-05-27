@@ -7,8 +7,7 @@ import axios from 'axios';
 import './App.css';
 
 const App = () => {
-  
-  const [todoState,setTodoState] = useState({todos: []});
+  const [todoState, setTodoState] = useState({todos: []});
 
   useEffect(() => {
     axios.get('https://treasurejsapi.herokuapp.com/api/v2/search?find=a&size=10')
@@ -21,7 +20,8 @@ const App = () => {
           title: name,
           status: 'new',
           id: _id,
-          dueDate: '2020-05-25'
+          dueDate: '2020-05-25',
+          labels: ['Personal', 'Shopping', 'Others']
         });
       }
       
@@ -35,7 +35,7 @@ const App = () => {
     }
   }, [])
 
-  // mark action on the todo
+  // change the status of the todos
   const markActionOnTodo = (actionValue, newTodos) => {
     setTodoState({todos: todoState.todos.map(todo => {
       if(newTodos.includes(todo.id)){
@@ -45,9 +45,43 @@ const App = () => {
     })})
   }
 
+  // add the labels of the todos
+  const addLabelsOnTodo = (labelValue, selectedTodoIds) => {
+    setTodoState({
+      todos: todoState.todos.map(todo => {
+        if(selectedTodoIds.includes(todo.id) 
+          && !todo.labels.includes(labelValue)){
+            todo.labels.push(labelValue);
+        }
+        return todo;
+      })
+    })
+  }
+
+  // this function will remove the label from the todo
+  const deleteLabelsOnTodo = (labelValue, todoId) => {
+    setTodoState({
+      todos: todoState.todos.map(todo => {
+        if(todo.id===todoId){
+          const index = todo.labels.indexOf(labelValue);
+          if(index>-1){
+            todo.labels.splice(index, 1);
+          }
+        }
+        return todo;
+      })
+    })
+  }
+
   // delete todo
-  const delTodo = (id) => {
-    setTodoState({todos: [...todoState.todos.filter(todo => todo.id!==id)] });
+  const delTodo = (id,status) => {
+    let decision = true;
+    if(status==='new' || status==='inprogress'){
+      decision = window.confirm('Are you sure you want to remove these task');
+    }
+    if(decision){
+      setTodoState({todos: [...todoState.todos.filter(todo => todo.id!==id)] });
+    }
   }
 
   const getTodayDate = ()=>{
@@ -64,7 +98,8 @@ const App = () => {
       id: uuid(),
       title,
       dueDate: dueDate==='' ? getTodayDate() : dueDate,
-      status: 'new'
+      status: 'new',
+      labels: []
     }
     setTodoState({
       todos: [...todoState.todos, newTodo]
@@ -77,9 +112,12 @@ const App = () => {
         <Header />
         <AddTodo addTodo={addTodo}/>
         <Todos 
-        todos={todoState.todos} 
-        markActionOnTodo={markActionOnTodo}
-        delTodo={delTodo}/>
+          todos={todoState.todos} 
+          markActionOnTodo={markActionOnTodo}
+          addLabelsOnTodo={addLabelsOnTodo}
+          delTodo={delTodo}
+          deleteLabelsOnTodo={deleteLabelsOnTodo}
+        />
       </div>
     </div>
   );

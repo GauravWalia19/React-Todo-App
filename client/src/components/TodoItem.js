@@ -1,56 +1,53 @@
 import React,{useState} from 'react'
 import PropTypes from 'prop-types';
 import Status from './statusIcon/StatusIcon';
+import LabelList from './LabelList';
 
 const TodoItem = (props)=>{
-    const [checkbox, setCheckbox] = useState({checked: false})
-    const { id, title, dueDate} = props.todo;
-
-    const getStyle = () => {
-        return {
-            background: "#f4f4f4",
-            padding: '12px',
-            borderBottom: '1px #ccc dotted',
-            textDecoration: props.todo.completed ? 'line-through' : 'none'
-        }
-    }
+    const [checkbox, setCheckbox] = useState(false)
+    const { id, title, dueDate, labels, status} = props.todo;
 
     const changeCheckboxState = () => {
-        setCheckbox({
-            checked: !checkbox.checked
-        })
-        console.log(checkbox);
-        if(!checkbox.checked){
-            props.setLocalTodos({
-                todos: [...props.localTodos.todos, id]
-            })
+        setCheckbox(!checkbox)
+        
+        if(!checkbox){
+            props.setLocalTodos([...props.localTodos, id])
         }else{
             // remove this id from state
-            props.setLocalTodos({
-                todos: props.localTodos.todos.filter(todoId => {
+            props.setLocalTodos(
+                props.localTodos.filter(todoId => {
                     return todoId!==id;
                 })
-            })
+            )
         }
     }
 
     return (
-        <div style={getStyle()}>
+        <div style={todoItemStyle}>
             <p>
-                {/*{props.addMarked.bind(this, id)}*/}
                 <input type="checkbox" onChange={changeCheckboxState}/>{' '}
                 <Status status={props.todo.status}/>
                 {'  '}
                 {title}
-                <button onClick={props.delTodo.bind(this, id)} style={btnStyle}>x</button>
+                <button onClick={props.delTodo.bind(this, id, status)} style={btnStyle}>x</button>
                 <span style={dateStyle}>{dueDate}</span>
             </p>
+            <LabelList labels={labels} id={id} deleteLabelsOnTodo={props.deleteLabelsOnTodo}/>
         </div>
     )
 }
 
 TodoItem.propTypes = {
-    todo: PropTypes.object.isRequired
+    todo: PropTypes.object.isRequired,
+    delTodo: PropTypes.func.isRequired,
+    localTodos: PropTypes.array.isRequired,
+    setLocalTodos: PropTypes.func.isRequired
+}
+
+const todoItemStyle = {
+    background: "#f4f4f4",
+    padding: '12px',
+    borderBottom: '2px #ccc dotted'
 }
 
 const btnStyle = {
