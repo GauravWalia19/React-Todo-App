@@ -48,8 +48,26 @@ router.post('/', (req,res) => {
     }
 })
 
+/**
+ * API to get all todos  
+ * 
+ * GET /api/v1/todos?limit=3
+ **/
 router.get('/', (req,res) => {
-    res.send('apis working');
+    let limit = req.query.limit;
+    if(!limit || parseInt(limit)<=0 || isNaN(limit)){
+        limit=100;
+    }else{
+        limit = parseInt(limit);
+    }
+    todo.find(null,null,{skip:0, limit: limit},(err,result)=>{
+        if(err){
+            console.log("Error in GET API: "+err);
+        }else{
+            res.header("Access-Control-Allow-Origin","*")
+            res.json(result);
+        }
+    })
 })
 
 /**
