@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "client": "cd client && yarn start",
+    "mern": "concurrently -n 'server,client' -c 'yellow,blue' \"yarn run dev\" \"yarn run client\"",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "repository": {
@@ -24,6 +26,7 @@
     "mongoose": "^5.9.16"
   },
   "devDependencies": {
+    "concurrently": "^5.2.0",
     "dotenv": "^8.2.0"
   }
 }

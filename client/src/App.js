@@ -9,7 +9,7 @@ const App = () => {
   const [todoState, setTodoState] = useState({todos: []});
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/v1/todos?limit=15')
+    axios.get('/api/v1/todos?limit=15')
     .then(res => {
       const response = res.data;
       setTodoState({
@@ -30,7 +30,7 @@ const App = () => {
   const markActionOnTodo = (actionValue, markedTodoIds) => {
     setTodoState({todos: todoState.todos.map(todo => {
       if(markedTodoIds.includes(todo.id)){
-        axios.put(`http://localhost:5000/api/v1/todos/${todo.id}`,{"status": actionValue})
+        axios.put(`/api/v1/todos/${todo.id}`,{"status": actionValue})
         .then(res => console.log(res.data.message))
         .catch(err => console.log(err))
         todo.status = actionValue
@@ -47,7 +47,7 @@ const App = () => {
           todo.labels.push(labelValue);
           
           // update the new labels
-          axios.put(`http://localhost:5000/api/v1/todos/${todo.id}`,{"labels": todo.labels})
+          axios.put(`/api/v1/todos/${todo.id}`,{"labels": todo.labels})
           .then(res => console.log(res.data.message))
           .catch(err => console.log(err))
         }
@@ -66,7 +66,7 @@ const App = () => {
             todo.labels.splice(index, 1);
             
             // update the new labels
-            axios.put(`http://localhost:5000/api/v1/todos/${todo.id}`,{"labels": todo.labels})
+            axios.put(`/api/v1/todos/${todo.id}`,{"labels": todo.labels})
             .then(res => console.log(res.data.message))
             .catch(err => console.log(err))
           }
@@ -83,7 +83,7 @@ const App = () => {
       decision = window.confirm('Are you sure you want to remove these task');
     }
     if(decision){
-      axios.delete(`http://localhost:5000/api/v1/todos/${id}`)
+      axios.delete(`/api/v1/todos/${id}`)
       .then(res => {
         if(res){
           console.log(res.data.message);
@@ -111,7 +111,7 @@ const App = () => {
       labels: []
     }
     // sending post request
-    axios.post("http://localhost:5000/api/v1/todos", newTodo)
+    axios.post("/api/v1/todos", newTodo)
     .then(res => {
       if(res){
         const id = res.data._doc._id;
