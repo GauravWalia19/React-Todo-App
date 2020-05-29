@@ -4,12 +4,10 @@ const todo = require('../../../models/todo');
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true,useUnifiedTopology: true});
+// by default, you need to set it to false.
+mongoose.set('useFindAndModify', false);
 const db = mongoose.connection;
 db.on('error',console.error.bind(console, 'Connection error:'));
-
-router.get('/', (req,res) => {
-    res.send('apis working');
-})
 
 /**
  * API to post single todo
@@ -50,36 +48,68 @@ router.post('/', (req,res) => {
     }
 })
 
-router.delete('/:id',(req,res) => {
-    
+router.get('/', (req,res) => {
+    res.send('apis working');
 })
 
+/**
+ * API to update single todo
+ * 
+ * PUT /api/v1/todos/:id
+ * 
+ * Sample Request body
+ *  {
+ *      "title": "first todo",
+ *      "status": "new",
+ *  	"labels": ["Work","Personal"]
+ *  }
+ **/
 router.put('/:id', (req,res) => {
     const {title, status, labels} = req.body;
 
     if(req.params.id==null || req.params.id===''){
         res.status(404).json({message: "Please send id for updating the doc"});
     }else if(title || status || labels){
-        if(status && status==='' || status!=='new' && status!=='inprogress' && status!=='complete'){
+        if(status!==undefined && status!=='new' && status!=='inprogress' && status!=='complete'){
             res.status(404).json({message: "Please send valid status to update"});
         }else if(labels !== undefined && !Array.isArray(labels)){
             res.status(404).json({message: "Please send a valid labels array"});
         }else{
-            const newTodo = new todo({...req.body, _id: req.params.id});
-            console.log(newTodo);
+            const putTodo = {};
+            if(title){putTodo.title=title}
+            if(status)(putTodo.status=status)
+            if(labels)(putTodo.labels=labels)
             
-            // newTodo.save()
-            // .then(()=>{
-            //     res.json({message: 'put request'})
-            // })
-            // .catch(err => {
-            //     console.log(err)
-            //     res.status(404).json({message: "invalid request"})
-            // })
+            todo.findOneAndUpdate(req.params.id,putTodo,function(err){
+                if(err){
+                    return res.send(err);
+                }
+                res.json({message:"Todo updated successfully"});
+            });
         }
     }else{
         res.status(404).json({message: "Please send the valid parameters to update"})
     }
 })
-// 5ed00f17293a774a0ea09c5d
+
+/**
+ * API to delete single todo
+ * 
+ * DELETE /api/v1/todos/:id
+ **/
+router.delete('/:id',(req,res) => {
+    if(req.params.id==null || req.params.id===''){
+        res.status(404).json({message: "Please send id for deleting the doc"});
+    }else{
+        todo.findOneAndDelete({ _id: req.params.id }, function (err) {
+            if(err){
+                console.log(err);
+                res.status(404).json({message: "Unable to delete the document"});
+            } else{
+                res.json({message: "Todo deleted successfully"});
+            }              
+        });
+    }
+})
+
 module.exports = router;
