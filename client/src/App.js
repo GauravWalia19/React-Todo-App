@@ -2,7 +2,6 @@ import React,{useState,useEffect} from 'react';
 import Todos from './components/Todos';
 import Header from './components/layout/Header';
 import AddTodo from './components/AddTodo';
-import {v4 as uuid} from 'uuid';
 import axios from 'axios';
 import './App.css';
 
@@ -10,35 +9,30 @@ const App = () => {
   const [todoState, setTodoState] = useState({todos: []});
 
   useEffect(() => {
-    axios.get('https://treasurejsapi.herokuapp.com/api/v2/search?find=a&size=10')
+    axios.get('http://localhost:5000/api/v1/todos?limit=15')
     .then(res => {
       const response = res.data;
-      let arr = [];
-      for(let i=0;i<response.length;i++){
-        const { name,_id } = response[i];
-        arr.push({
-          title: name,
-          status: 'new',
-          id: _id,
-          dueDate: '2020-05-25',
-          labels: ['Personal', 'Shopping', 'Others']
-        });
-      }
-      
       setTodoState({
-        todos: arr
+        todos: response.map(resp => {
+          resp = {...resp, id: resp._id}
+          delete resp._id;
+          return resp;
+        })
       })
     })
-    .catch()
+    .catch(err => console.log(err))
     return () => {
       
     }
   }, [])
 
-  // change the status of the todos
-  const markActionOnTodo = (actionValue, newTodos) => {
+  // this function will change the status of the todos
+  const markActionOnTodo = (actionValue, markedTodoIds) => {
     setTodoState({todos: todoState.todos.map(todo => {
-      if(newTodos.includes(todo.id)){
+      if(markedTodoIds.includes(todo.id)){
+        axios.put(`http://localhost:5000/api/v1/todos/${todo.id}`,{"status": actionValue})
+        .then(res => console.log(res.data.message))
+        .catch(err => console.log(err))
         todo.status = actionValue
       }
       return todo;
@@ -49,9 +43,13 @@ const App = () => {
   const addLabelsOnTodo = (labelValue, selectedTodoIds) => {
     setTodoState({
       todos: todoState.todos.map(todo => {
-        if(selectedTodoIds.includes(todo.id) 
-          && !todo.labels.includes(labelValue)){
-            todo.labels.push(labelValue);
+        if(selectedTodoIds.includes(todo.id) && !todo.labels.includes(labelValue)){
+          todo.labels.push(labelValue);
+          
+          // update the new labels
+          axios.put(`http://localhost:5000/api/v1/todos/${todo.id}`,{"labels": todo.labels})
+          .then(res => console.log(res.data.message))
+          .catch(err => console.log(err))
         }
         return todo;
       })
@@ -66,6 +64,11 @@ const App = () => {
           const index = todo.labels.indexOf(labelValue);
           if(index>-1){
             todo.labels.splice(index, 1);
+            
+            // update the new labels
+            axios.put(`http://localhost:5000/api/v1/todos/${todo.id}`,{"labels": todo.labels})
+            .then(res => console.log(res.data.message))
+            .catch(err => console.log(err))
           }
         }
         return todo;
@@ -73,14 +76,21 @@ const App = () => {
     })
   }
 
-  // delete todo
+  // This function will delete the todo
   const delTodo = (id,status) => {
     let decision = true;
     if(status==='new' || status==='inprogress'){
       decision = window.confirm('Are you sure you want to remove these task');
     }
     if(decision){
-      setTodoState({todos: [...todoState.todos.filter(todo => todo.id!==id)] });
+      axios.delete(`http://localhost:5000/api/v1/todos/${id}`)
+      .then(res => {
+        if(res){
+          console.log(res.data.message);
+          setTodoState({todos: [...todoState.todos.filter(todo => todo.id!==id)] });
+        }
+      })
+      .catch(err => console.log(err))
     }
   }
 
@@ -90,20 +100,28 @@ const App = () => {
     return (date.getFullYear()+"-"+month+"-"+date.getDate());
   }
 
-  // add todo
+  // This function will add a new todo to database and state
   const addTodo = (title, dueDate) => {
     if(title===''){return}
 
     const newTodo = {
-      id: uuid(),
       title,
       dueDate: dueDate==='' ? getTodayDate() : dueDate,
       status: 'new',
       labels: []
     }
-    setTodoState({
-      todos: [...todoState.todos, newTodo]
+    // sending post request
+    axios.post("http://localhost:5000/api/v1/todos", newTodo)
+    .then(res => {
+      if(res){
+        const id = res.data._doc._id;
+        newTodo.id = id;
+        setTodoState({
+          todos: [...todoState.todos, newTodo]
+        })
+      }
     })
+    .catch(err => console.log(err))
   }
 
   return (

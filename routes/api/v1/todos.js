@@ -40,7 +40,7 @@ router.post('/', (req,res) => {
         const newTodo = new todo({title,status,dueDate,labels});
         newTodo.save()
         .then((savedTodo) => {
-            res.json({message: "Todo added Successfully"});
+            res.json({...savedTodo, message: "Todo added Successfully"});
         })
         .catch(err => {
             res.status(404).json({message:"Todo title should be unique"})
@@ -98,11 +98,13 @@ router.put('/:id', (req,res) => {
             if(status)(putTodo.status=status)
             if(labels)(putTodo.labels=labels)
             
-            todo.findOneAndUpdate(req.params.id,putTodo,function(err){
+            todo.findOneAndUpdate({_id: req.params.id},putTodo,function(err){
                 if(err){
-                    return res.send(err);
+                    console.log(err);
+                    res.status(404).json({message: "Problem while updating todo"})
+                }else{
+                    res.json({message:"Todo updated successfully"});
                 }
-                res.json({message:"Todo updated successfully"});
             });
         }
     }else{

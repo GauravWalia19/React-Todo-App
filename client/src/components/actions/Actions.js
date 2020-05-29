@@ -15,7 +15,6 @@ const Actions = (props)=> {
     }
 
     const onLabelChange = (e) =>{
-        console.log(e.target.value);
         setLabelState(e.target.value);
         if(props.localTodos.length===0){
             alert('Please select any item');
@@ -40,7 +39,7 @@ const Actions = (props)=> {
             </div>
             <div className="actions">
                 Select the labels for the items{' '}
-                <select onChange={onLabelChange} value={labelState} multiple={true}>
+                <select onChange={onLabelChange} value={labelState}>
                     <option value="">select</option>
                     <option value="Personal">Personal</option>
                     <option value="Work">Work</option>
