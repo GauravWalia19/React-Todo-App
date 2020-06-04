@@ -12,13 +12,15 @@ const App = () => {
     axios.get('/api/v1/todos?limit=15')
     .then(res => {
       const response = res.data;
-      setTodoState({
-        todos: response.map(resp => {
-          resp = {...resp, id: resp._id}
-          delete resp._id;
-          return resp;
+      if(Array.isArray(response)){
+        setTodoState({
+          todos: response.map(resp => {
+            resp = {...resp, id: resp._id}
+            delete resp._id;
+            return resp;
+          })
         })
-      })
+      }
     })
     .catch(err => console.log(err))
     return () => {
