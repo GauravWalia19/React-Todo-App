@@ -1,6 +1,10 @@
 {
   "name": "todo-app",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.x",
+    "yarn": "1.x"
+  },
   "description": "This is the server for todo app",
   "main": "index.js",
   "scripts": {
@@ -9,7 +13,7 @@
     "dev": "nodemon index.js",
     "client": "cd client && yarn start",
     "mern": "concurrently -n 'server,client' -c 'yellow,blue' \"yarn run dev\" \"yarn run client\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && yarn install && yarn run build"
   },
   "repository": {
     "type": "git",
