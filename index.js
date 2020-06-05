@@ -16,6 +16,9 @@ app.use(express.json());
 // express middleware handling the form parsing
 app.use(express.urlencoded({extended: false}));
 
+// handling api routes
+app.use('/api/v1/todos',require('./routes/api/v1/todos'));
+
 // create static assets from react code for production only
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static( 'client/build' ));
@@ -24,9 +27,6 @@ if (process.env.NODE_ENV === 'production') {
         res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
     });
 }
-
-// handling api routes
-app.use('/api/v1/todos',require('./routes/api/v1/todos'));
 
 const PORT = process.env.PORT || 5000;
 
