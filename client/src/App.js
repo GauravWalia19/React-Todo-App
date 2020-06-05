@@ -17,7 +17,6 @@ const App = () => {
 
   const fetchTodos = ()=>{
     axios.get('/api/v1/todos?limit=15')
-    .then(res => res)
     .then(res => {
       const response = res.data;
       if(Array.isArray(response)){
