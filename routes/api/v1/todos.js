@@ -3,7 +3,7 @@ const router = express.Router();
 const todo = require('../../../models/todo');
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true,useUnifiedTopology: true});
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true});
 // by default, you need to set it to false.
 mongoose.set('useFindAndModify', false);
 const db = mongoose.connection;

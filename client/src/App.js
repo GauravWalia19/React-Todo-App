@@ -9,6 +9,13 @@ const App = () => {
   const [todoState, setTodoState] = useState({todos: []});
 
   useEffect(() => {
+    fetchTodos();
+    return () => {
+      
+    }
+  }, [])
+
+  const fetchTodos = ()=>{
     axios.get('/api/v1/todos?limit=15')
     .then(res => res)
     .then(res => {
@@ -26,11 +33,7 @@ const App = () => {
       }
     })
     .catch(err => console.log(err))
-    return () => {
-      
-    }
-  }, [])
-
+  }
   // this function will change the status of the todos
   const markActionOnTodo = (actionValue, markedTodoIds) => {
     setTodoState({todos: todoState.todos.map(todo => {

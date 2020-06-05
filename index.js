@@ -1,10 +1,14 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
 // exclusing dotenv config from production
 if (process.env.NODE_ENV !== 'production') require('dotenv').config()
+
+// CORS Middleware
+app.use(cors());
 
 // express middleware handling the body parsing 
 app.use(express.json());
