@@ -23,7 +23,7 @@ db.on('error',console.error.bind(console, 'Connection error:'));
  *  	"labels": ["Work","Personal"]
  *  }
  **/
-router.post('/', (req,res) => {
+router.post('/', auth, (req,res) => {
     const {title, status, dueDate, labels} = req.body;
     
     // if any one parameter is not present in the api
@@ -83,7 +83,7 @@ router.get('/', auth, (req,res) => {
  *  	"labels": ["Work","Personal"]
  *  }
  **/
-router.put('/:id', (req,res) => {
+router.put('/:id', auth, (req,res) => {
     const {title, status, labels} = req.body;
 
     if(req.params.id==null || req.params.id===''){
@@ -118,7 +118,7 @@ router.put('/:id', (req,res) => {
  * 
  * DELETE /api/v1/todos/:id
  **/
-router.delete('/:id',(req,res) => {
+router.delete('/:id',auth,(req,res) => {
     if(req.params.id==null || req.params.id===''){
         res.status(404).json({message: "Please send id for deleting the doc"});
     }else{

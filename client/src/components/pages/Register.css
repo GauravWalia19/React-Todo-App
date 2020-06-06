@@ -1,0 +1,27 @@
+.registerOuterDiv{
+    text-align: center;
+}
+.registerInnerDiv{
+    border: 1px solid black;
+    width: 25%;
+    margin: auto;
+    text-align: center;
+    background-color: cyan;
+    padding: 5px;
+}
+input{
+    padding: 5px;
+    text-align: center;
+}
+.loginLink{
+    font-weight: bold;
+    color: black;
+}
+.submitButton{
+    border: 1px solid black;
+    outline: none;
+    background-color: rgb(238, 136, 99);
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
