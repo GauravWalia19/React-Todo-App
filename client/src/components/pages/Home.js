@@ -171,7 +171,7 @@ const Home = (props) => {
 
     return (
         <div style={{ padding: "0 1rem" }}>
-            <Header />
+            <Header history={props.history}/>
             <AddTodo addTodo={addTodo} />
             <div style={errorStyle}>
                 <PageError errors={errors} setErrors={setErrors}/>

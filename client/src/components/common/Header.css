@@ -9,3 +9,10 @@
     padding: 10px;
     color: #fff;
 }
+.logoutButton{
+    background: transparent;
+    outline: none;
+    border: none;
+    font-size: 16px;
+    padding: 11px;
+}
