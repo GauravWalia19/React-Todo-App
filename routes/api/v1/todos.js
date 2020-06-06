@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const todo = require('../../../models/todo');
 const mongoose = require('mongoose');
+const auth = require('../../../middleware/auth');
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true});
 // by default, you need to set it to false.
@@ -53,7 +54,7 @@ router.post('/', (req,res) => {
  * 
  * GET /api/v1/todos?limit=3
  **/
-router.get('/', (req,res) => {
+router.get('/', auth, (req,res) => {
     let limit = req.query.limit;
     if(!limit || parseInt(limit)<=0 || isNaN(limit)){
         limit=100;
