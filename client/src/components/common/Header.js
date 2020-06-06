@@ -9,9 +9,15 @@ const Header = (props) => {
         props.history.push('/');
     }
 
+    const getLogoutOnHome = ()=>{
+        if(props.history!==undefined){
+            return <button className="navlinks logoutButton" onClick={handleLogout}>/logout</button>
+        }
+    }
+
     return (
         <header className="header">
-            <button className="navlinks logoutButton" onClick={handleLogout}>/logout</button>    
+            {getLogoutOnHome()}   
             <Link to="/login" className="navlinks">/login</Link>
             <Link to="/register" className="navlinks">/register</Link>
             <h1>Task Management To-do list</h1>
