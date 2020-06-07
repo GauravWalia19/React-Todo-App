@@ -19,6 +19,10 @@ const todo = new Schema({
     labels: {
         type: Array,
         required: true
+    },
+    userId: {
+        type: String,
+        required: true
     }
 })
 

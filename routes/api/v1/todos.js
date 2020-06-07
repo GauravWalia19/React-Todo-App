@@ -25,7 +25,6 @@ db.on('error',console.error.bind(console, 'Connection error:'));
  **/
 router.post('/', auth, (req,res) => {
     const {title, status, dueDate, labels} = req.body;
-    
     // if any one parameter is not present in the api
     if(!title || !status || !dueDate || !labels){
         res.status(404).json({message: "Please all the required parameters"});
@@ -38,7 +37,7 @@ router.post('/', auth, (req,res) => {
     }else if(!Array.isArray(labels)){
         res.status(404).json({message: "Labels passed should be an array"})
     }else{
-        const newTodo = new todo({title,status,dueDate,labels});
+        const newTodo = new todo({title,status,dueDate,labels,userId: req.user.id});
         newTodo.save()
         .then((savedTodo) => {
             res.json({...savedTodo, message: "Todo added Successfully"});
@@ -61,7 +60,8 @@ router.get('/', auth, (req,res) => {
     }else{
         limit = parseInt(limit);
     }
-    todo.find(null,null,{skip:0, limit: limit},(err,result)=>{
+    // search the specific user todos
+    todo.find({userId: req.user.id},null,{skip:0, limit: limit},(err,result)=>{
         if(err){
             console.log("Error in GET API: "+err);
         }else{
