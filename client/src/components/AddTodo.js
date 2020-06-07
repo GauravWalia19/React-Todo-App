@@ -33,7 +33,7 @@ const AddTodo = (props) => {
                 type="text"
                 name="title"
                 placeholder="Enter a new todo"
-                style={{ flex: '10', padding: '10px', fontSize: '16px' }}
+                style={{ flex: '10', padding: '10px', fontSize: '16px', textAlign:'left' }}
                 value={todoInput.title}
                 onChange={onChangeTitle}
                 autoComplete="off"

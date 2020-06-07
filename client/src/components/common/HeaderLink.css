@@ -1,0 +1,14 @@
+.headerProfileLinks{
+    position: absolute;
+    background-color: #f4f4f4;
+    right: 10px;
+    color: black;
+    margin-top: 40px;
+}
+.headerLinks{
+    display: block;
+    color: black;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 2px #ccc dotted;
+}

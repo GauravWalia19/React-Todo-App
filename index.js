@@ -18,6 +18,7 @@ app.use(express.urlencoded({extended: false}));
 
 // handling api routes
 app.use('/api/v1/todos',require('./routes/api/v1/todos'));
+app.use('/api/v1/users', require('./routes/api/v1/users'));
 
 // create static assets from react code for production only
 if (process.env.NODE_ENV === 'production') {

@@ -1,0 +1,17 @@
+.notFoundDiv{
+    background-color: #f4f4f4;
+    border: 5px #ccc dotted;
+    min-height: 90vh;
+    text-align: center;
+}
+.notFoundInnerDiv{
+    display: inline-block;
+    padding: 50px;
+    margin: 5px;
+}
+.notFoundLink{
+    color: black;
+    padding: 20px;
+    text-decoration: underline;
+    font-weight: bold;
+}

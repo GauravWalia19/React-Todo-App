@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const todo = require('../../../models/todo');
 const mongoose = require('mongoose');
+const auth = require('../../../middleware/auth');
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true,useUnifiedTopology: true,useCreateIndex: true});
 // by default, you need to set it to false.
@@ -22,9 +23,8 @@ db.on('error',console.error.bind(console, 'Connection error:'));
  *  	"labels": ["Work","Personal"]
  *  }
  **/
-router.post('/', (req,res) => {
+router.post('/', auth, (req,res) => {
     const {title, status, dueDate, labels} = req.body;
-    
     // if any one parameter is not present in the api
     if(!title || !status || !dueDate || !labels){
         res.status(404).json({message: "Please all the required parameters"});
@@ -37,7 +37,7 @@ router.post('/', (req,res) => {
     }else if(!Array.isArray(labels)){
         res.status(404).json({message: "Labels passed should be an array"})
     }else{
-        const newTodo = new todo({title,status,dueDate,labels});
+        const newTodo = new todo({title,status,dueDate,labels,userId: req.user.id});
         newTodo.save()
         .then((savedTodo) => {
             res.json({...savedTodo, message: "Todo added Successfully"});
@@ -53,14 +53,15 @@ router.post('/', (req,res) => {
  * 
  * GET /api/v1/todos?limit=3
  **/
-router.get('/', (req,res) => {
+router.get('/', auth, (req,res) => {
     let limit = req.query.limit;
     if(!limit || parseInt(limit)<=0 || isNaN(limit)){
         limit=100;
     }else{
         limit = parseInt(limit);
     }
-    todo.find(null,null,{skip:0, limit: limit},(err,result)=>{
+    // search the specific user todos
+    todo.find({userId: req.user.id},null,{skip:0, limit: limit},(err,result)=>{
         if(err){
             console.log("Error in GET API: "+err);
         }else{
@@ -82,7 +83,7 @@ router.get('/', (req,res) => {
  *  	"labels": ["Work","Personal"]
  *  }
  **/
-router.put('/:id', (req,res) => {
+router.put('/:id', auth, (req,res) => {
     const {title, status, labels} = req.body;
 
     if(req.params.id==null || req.params.id===''){
@@ -117,7 +118,7 @@ router.put('/:id', (req,res) => {
  * 
  * DELETE /api/v1/todos/:id
  **/
-router.delete('/:id',(req,res) => {
+router.delete('/:id',auth,(req,res) => {
     if(req.params.id==null || req.params.id===''){
         res.status(404).json({message: "Please send id for deleting the doc"});
     }else{
