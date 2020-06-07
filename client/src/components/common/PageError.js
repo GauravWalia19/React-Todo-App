@@ -24,14 +24,15 @@ const PageError = (props) => {
 
 const errorStyle={
     backgroundColor: "rgb(238, 136, 99)",
-    padding: "5px",
+    padding: "8px",
     borderRadius: "5px",
-    margin: "5px"
+    margin: "15px"
 }
 const crossStyle={
     border: "none",
     outline: "none",
     background: "transparent",
-    float: "right"
+    float: "right",
+    cursor: "pointer"
 }
 export default PageError;

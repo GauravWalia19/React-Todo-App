@@ -43,7 +43,6 @@ const Register = (props) => {
             }
         })
         .catch(err => {
-            console.log(err);
             setErrors([...errors, "User already registered"]);
             return;
         })
@@ -53,46 +52,42 @@ const Register = (props) => {
     return (
         <div className="registerOuterDiv">
             <div className="registerInnerDiv">
-                <h2>Register</h2>
+                <h2>CREATE ACCOUNT</h2>
                 <PageError errors={errors} setErrors={setErrors}/>
-                <form method="POST" onSubmit={handleSubmit}>
-                    <div>
-                        Name:<br/>
+                <form method="POST" onSubmit={handleSubmit} autoComplete="off">
+                    <div className="inputDiv">
                         <input 
                             type="text" 
                             name="name" 
-                            placeholder="Enter your name" 
+                            placeholder="Your Name" 
                             autoComplete="off"
                             value={user.name}
                             onChange={handleChange}
                             required
                         />
                     </div>
-                    <div>
-                        Email:<br/>
+                    <div className="inputDiv">
                         <input 
                             type="email" 
                             name="email" 
-                            placeholder="Enter your email"
+                            placeholder="Your Email"
                             value={user.email}
                             onChange={handleChange}
                             required
                         />
                     </div>
-                    <div>
-                        Password:<br/>
+                    <div className="inputDiv">
                         <input 
                             type="password" 
                             name="password1" 
-                            placeholder="Enter password" 
+                            placeholder="Password" 
                             autoComplete="off"
                             value={user.password1}
                             onChange={handleChange}
                             required
                         />
                     </div>
-                    <div>   
-                        Confirm Password:<br/>
+                    <div className="inputDiv">   
                         <input 
                             type="password" 
                             name="password2" 
@@ -103,15 +98,16 @@ const Register = (props) => {
                             required
                         />
                     </div>
-                    <div>
+                    <div className="loginButtonDiv">
                         <button type="submit" className="submitButton">
-                        submit
+                        SIGN UP
                         </button>
                     </div>
                 </form>
+                <p>Have already an account ?{' '} 
+                    <Link to="/login" className="loginLink">Login here</Link>
+                </p>
             </div>
-            <p>If you are already registered then{' '} 
-            <Link to="/login" className="loginLink">/login</Link> here</p>
         </div>
     )
 }
