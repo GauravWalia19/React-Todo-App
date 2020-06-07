@@ -192,6 +192,6 @@ const errorStyle={
     marginTop: '0px',
     marginRight: '5px',
     right: "8px",
-    width: "20%"
+    width: "30%"
 }
 export default Home;

@@ -13,8 +13,8 @@ const PageError = (props) => {
         {
             props.errors.map(error => {
                 return <div key={error} style={errorStyle}>
-                    {error}
                     <button style={crossStyle} onClick={handleClick.bind(this, error)}>x</button>
+                    {error}
                 </div>
             })
         }
