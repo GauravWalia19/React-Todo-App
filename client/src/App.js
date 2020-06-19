@@ -4,7 +4,7 @@ import {BrowserRouter,Route,Switch} from "react-router-dom";
 import Register from './components/pages/Register';
 import Login from './components/pages/Login';
 import Home from './components/pages/Home';
-import HelloTodo from './components/HelloTodo';
+import HelloTodo from './components/pages/HelloTodo';
 import NotFoundPage from './components/pages/NotFoundPage';
 
 const App = () => {

@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import './Actions.css';
+import './styles/Actions.css';
 
 const Actions = (props)=> {
     const [actionState, setActionState] = useState("");

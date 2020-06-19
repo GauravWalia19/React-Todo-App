@@ -38,7 +38,7 @@
 /* login image */
 #login{
     font-size: 1.8em;
-    background-image: url('bg-01.jpg');
+    background-image: url('../images/bg-01.jpg');
     width: 100%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;

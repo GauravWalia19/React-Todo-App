@@ -1,5 +1,5 @@
 import React from 'react'
-import './HeaderLink.css';
+import '../styles/HeaderLink.css';
 
 const HeaderLink = (props) => {
     const getLogoutOnHome = ()=>{

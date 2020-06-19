@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import TodoItem from './TodoItem';
 import PropTypes from 'prop-types';
-import Actions from './actions/Actions';
+import Actions from './Actions';
 
 const Todos = (props) =>{
     const [localTodos, setLocalTodos] = useState([]);

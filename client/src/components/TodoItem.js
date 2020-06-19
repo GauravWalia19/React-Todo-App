@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import PropTypes from 'prop-types';
-import Status from './statusIcon/StatusIcon';
+import Status from './StatusIcon';
 import LabelList from './LabelList';
 
 const TodoItem = (props)=>{

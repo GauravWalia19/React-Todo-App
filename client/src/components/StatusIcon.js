@@ -1,5 +1,5 @@
 import React from 'react';
-import './StatusIcon.css';
+import './styles/StatusIcon.css';
 const Status = (props) => {
 
     if(props.status==='inprogress'){

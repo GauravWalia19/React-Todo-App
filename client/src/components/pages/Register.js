@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import './Register.css';
+import '../styles/Register.css';
 import {Link} from 'react-router-dom';
 import PageError from '../common/PageError';
 import axios from 'axios';
