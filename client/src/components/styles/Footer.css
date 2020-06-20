@@ -1,0 +1,46 @@
+.footerStyle{
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+.footerIconStyle{
+    color: #61DBFB;
+    padding: 5px;
+}
+.footerLinkStyle{
+    color: white;
+}
+#footerUpperDiv{
+    padding: 10px;
+}
+.footerDivs{
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+    padding: 15px;
+    margin: auto;
+}
+.footerDivs>ul{
+    list-style-type: none;
+    width: 100%;
+    margin: auto;
+}
+.fa-code-branch{
+    transform: rotate(180deg) scaleX(-1);
+}
+@media screen and (min-width: 465px){
+    .footerDivs{
+        width: 50%;
+    }
+}
+@media screen and (min-width: 750px){
+    .footerDivs>ul{
+        width: 70%;
+    }
+}
+@media screen and (min-width: 840px){
+    .footerDivs>ul{
+        width: 30%;
+    }
+}

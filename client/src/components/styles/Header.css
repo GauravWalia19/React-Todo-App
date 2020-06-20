@@ -3,6 +3,12 @@
     color: #fff;
     padding: 10px;
 }
+.header > h1{
+    font-size: 1.7em;
+}
+.taskHeader{
+    color: #fff;
+}
 .navlinks{
     float: right;
     padding: 10px;
@@ -20,4 +26,9 @@
 }
 .fa-check-circle{
     color: #61DBFB;
+}
+@media screen and (min-width: 426px){
+    .header > h1{
+        font-size: 2em;
+    }
 }

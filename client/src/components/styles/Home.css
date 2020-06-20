@@ -1,0 +1,16 @@
+.homeStyle{
+    padding: 0;
+}
+.errorStyle{
+    position: absolute;
+    margin-top: 0px;
+    margin-right: 5px;
+    right: 8px;
+    width: 60%;
+}
+
+@media screen and (min-width: 426px){
+    .homeStyle{
+        padding: 0 1rem;
+    }
+}

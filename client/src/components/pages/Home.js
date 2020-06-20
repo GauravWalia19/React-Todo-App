@@ -5,32 +5,37 @@ import AddTodo from '../AddTodo';
 import Todos from '../Todos';
 import axios from 'axios';
 import PageError from '../common/PageError';
+import '../styles/Home.css';
 
 const Home = (props) => {
     const [todoState, setTodoState] = useState({ todos: [] });
     const [errors, setErrors] = useState([]);
     
     useEffect(() => {
-        axios.get('/api/v1/todos?limit=15',{
-            headers: {
-                'x-auth-token': localStorage.getItem('token')
-            }
-        })
-        .then(res => {
-            const response = res.data;
-            if (Array.isArray(response)) {
-                setTodoState({
-                    todos: response.map(resp => {
-                        resp = { ...resp, id: resp._id }
-                        delete resp._id;
-                        return resp;
+        if(localStorage.getItem('token')){
+            axios.get('/api/v1/todos?limit=15',{
+                headers: {
+                    'x-auth-token': localStorage.getItem('token')
+                }
+            })
+            .then(res => {
+                const response = res.data;
+                if (Array.isArray(response)) {
+                    setTodoState({
+                        todos: response.map(resp => {
+                            resp = { ...resp, id: resp._id }
+                            delete resp._id;
+                            return resp;
+                        })
                     })
-                })
-            }
-        })
-        .catch(err => {
-            alert("User is unautherized to get Todos");
-        })
+                }
+            })
+            .catch(err => {
+                alert("User is unautherized to get Todos");
+            })
+        }else{
+            alert("You are unautherized to proceed\nWait you are being redirected");
+        }
     }, [])
 
     // this function will change the status of the todos
@@ -171,10 +176,10 @@ const Home = (props) => {
     }
 
     return (
-        <div style={{ padding: "0 1rem" }}>
+        <div className="homeStyle">
             <Header history={props.history}/>
             <AddTodo addTodo={addTodo} />
-            <div style={errorStyle}>
+            <div className="errorStyle">
                 <PageError errors={errors} setErrors={setErrors}/>
             </div>
             <Todos
@@ -189,11 +194,4 @@ const Home = (props) => {
     )
 }
 
-const errorStyle={
-    position: 'absolute',
-    marginTop: '0px',
-    marginRight: '5px',
-    right: "8px",
-    width: "30%"
-}
 export default Home;

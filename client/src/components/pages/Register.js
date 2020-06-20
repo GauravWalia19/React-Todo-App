@@ -41,6 +41,7 @@ const Register = (props) => {
             if(_user!==undefined){
                 // add token to localstorage
                 localStorage.setItem('token', _user.data.token);
+                alert("User created successfully");
                 props.history.push('/home');
             }
         })

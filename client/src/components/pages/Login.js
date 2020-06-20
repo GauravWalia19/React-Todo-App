@@ -28,11 +28,12 @@ const Login = (props) => {
             if(_user!==undefined){
                 // add token to localstorage
                 localStorage.setItem('token', _user.data.token);
+                alert("Successfully logged in");
                 props.history.push('/home');
             }
         })
         .catch(err => {
-            setErrors([...errors, "User or password is incorrect"]);
+            setErrors([...errors, "Email or Password is incorrect"]);
             return;
         })
         setUser({email:'',password:''})

@@ -25,6 +25,7 @@ const Header = (props) => {
     const handleLogout = () => {
         // delete the token from localstorage
         localStorage.setItem('token', '');
+        alert('You are successfully logout');
         props.history.push('/');
     }
 
@@ -46,17 +47,24 @@ const Header = (props) => {
                     {showDropdown()}
                 </React.Fragment>
             )
-        }else if(props.history!==undefined){
-            return <i className="fas fa-user-circle fa-2x navlinks"></i>
+        }else if(props.history===undefined){
+            return (
+                <React.Fragment>
+                    <Link to="/login" className="navlinks">/login</Link>
+                    <Link to="/register" className="navlinks">/register</Link>
+                </React.Fragment>
+            ) 
         }  
     }
 
     return (
         <header className="header">
             {getProfileLinks()}
-            <Link to="/login" className="navlinks">/login</Link>
-            <Link to="/register" className="navlinks">/register</Link>
-            <h1><i className="fas fa-check-circle"></i> Task Management</h1>
+            <h1>
+                <Link to={props.history===undefined ? "/" : "/home"} className="taskHeader">
+                    <i className="fas fa-check-circle"></i> Task Management
+                </Link>
+            </h1>
         </header>
     )
 }
