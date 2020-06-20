@@ -3,6 +3,8 @@ import '../styles/Register.css';
 import {Link} from 'react-router-dom';
 import PageError from '../common/PageError';
 import axios from 'axios';
+import Footer from '../common/Footer';
+import Header from '../common/Header';
 
 const Register = (props) => {
     const [user, setUser] = useState({name: '',password1: '',password2: '',email:''})
@@ -50,65 +52,69 @@ const Register = (props) => {
     }
 
     return (
-        <div className="registerOuterDiv">
-            <div className="registerInnerDiv">
-                <h2>CREATE ACCOUNT</h2>
-                <PageError errors={errors} setErrors={setErrors}/>
-                <form method="POST" onSubmit={handleSubmit} autoComplete="off">
-                    <div className="inputDiv">
-                        <input 
-                            type="text" 
-                            name="name" 
-                            placeholder="Your Name" 
-                            autoComplete="off"
-                            value={user.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="inputDiv">
-                        <input 
-                            type="email" 
-                            name="email" 
-                            placeholder="Your Email"
-                            value={user.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="inputDiv">
-                        <input 
-                            type="password" 
-                            name="password1" 
-                            placeholder="Password" 
-                            autoComplete="off"
-                            value={user.password1}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="inputDiv">   
-                        <input 
-                            type="password" 
-                            name="password2" 
-                            placeholder="Confirm password" 
-                            autoComplete="off"
-                            value={user.password2}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="loginButtonDiv">
-                        <button type="submit" className="submitButton">
-                        SIGN UP
-                        </button>
-                    </div>
-                </form>
-                <p>Have already an account ?{' '} 
-                    <Link to="/login" className="loginLink">Login here</Link>
-                </p>
+        <React.Fragment>
+            <Header />
+            <div className="registerOuterDiv">
+                <div className="registerInnerDiv">
+                    <h2>CREATE ACCOUNT</h2>
+                    <PageError errors={errors} setErrors={setErrors}/>
+                    <form method="POST" onSubmit={handleSubmit} autoComplete="off">
+                        <div className="inputDiv">
+                            Name<br/>
+                            <input 
+                                type="text" 
+                                name="name" 
+                                autoComplete="off"
+                                value={user.name}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="inputDiv">
+                            Email<br/>
+                            <input 
+                                type="email" 
+                                name="email" 
+                                value={user.email}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="inputDiv">
+                            Password<br/>
+                            <input 
+                                type="password" 
+                                name="password1"  
+                                autoComplete="off"
+                                value={user.password1}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="inputDiv">
+                            Confirm Password<br/>   
+                            <input 
+                                type="password" 
+                                name="password2"  
+                                autoComplete="off"
+                                value={user.password2}
+                                onChange={handleChange}
+                                required
+                            />
+                        </div>
+                        <div className="loginButtonDiv">
+                            <button type="submit" className="submitButton">
+                            SIGN UP
+                            </button>
+                        </div>
+                    </form>
+                    <p>Have already an account ?{' '} 
+                        <Link to="/login" className="loginLink">Login here</Link>
+                    </p>
+                </div>
             </div>
-        </div>
+            <Footer />
+        </React.Fragment>
     )
 }
 

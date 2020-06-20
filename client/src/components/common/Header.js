@@ -9,15 +9,17 @@ const Header = (props) => {
     const [toggleDropdown, setToggleDropdown] = useState(false);
 
     useEffect(() => {
-        axios.get('/api/v1/users',{
-            headers: {
-                'x-auth-token': localStorage.getItem('token')
-            }
-        })
-        .then(_user => {
-            setUser({email: _user.data.email})
-        })
-        .catch(err => console.log(err));
+        if(localStorage.getItem('token')){
+            axios.get('/api/v1/users',{
+                headers: {
+                    'x-auth-token': localStorage.getItem('token')
+                }
+            })
+            .then(_user => {
+                setUser({email: _user.data.email})
+            })
+            .catch(err => {});
+        }
     }, [])
 
     const handleLogout = () => {
@@ -45,7 +47,7 @@ const Header = (props) => {
                 </React.Fragment>
             )
         }else if(props.history!==undefined){
-            return <button className="navlinks logoutButton" onClick={handleLogout}>/logout</button>
+            return <i className="fas fa-user-circle fa-2x navlinks"></i>
         }  
     }
 
@@ -54,7 +56,7 @@ const Header = (props) => {
             {getProfileLinks()}
             <Link to="/login" className="navlinks">/login</Link>
             <Link to="/register" className="navlinks">/register</Link>
-            <h1>Task Management To-do list</h1>
+            <h1><i className="fas fa-check-circle"></i> Task Management</h1>
         </header>
     )
 }

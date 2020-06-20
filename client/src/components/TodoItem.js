@@ -25,7 +25,7 @@ const TodoItem = (props)=>{
     return (
         <div style={todoItemStyle}>
             <p>
-                <input type="checkbox" onChange={changeCheckboxState}/>{' '}
+                <input type="checkbox" onChange={changeCheckboxState} style={checkboxStyle}/>{' '}
                 <Status status={props.todo.status}/>
                 {'  '}
                 {title}
@@ -42,6 +42,10 @@ TodoItem.propTypes = {
     delTodo: PropTypes.func.isRequired,
     localTodos: PropTypes.array.isRequired,
     setLocalTodos: PropTypes.func.isRequired
+}
+
+const checkboxStyle={
+    padding: '2px'
 }
 
 const todoItemStyle = {

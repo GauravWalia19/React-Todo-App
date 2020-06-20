@@ -1,14 +1,18 @@
 .headerProfileLinks{
     position: absolute;
-    background-color: #f4f4f4;
-    right: 10px;
+    background-color: #61DBFB;
+    right: 15px;
     color: black;
     margin-top: 40px;
+    border-radius: 5px;
 }
 .headerLinks{
     display: block;
     color: black;
     padding: 10px;
     cursor: pointer;
-    border-bottom: 2px #ccc dotted;
+    border-bottom: 2px #333 dotted;
+}
+.fa-sign-out-alt{
+    color: #333;
 }

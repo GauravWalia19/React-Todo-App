@@ -30,7 +30,7 @@ const Actions = (props)=> {
         <div style={actionStyle}>
             <div className="actions">
                 Mark the Tasks{'  '}
-                <select onChange={onActionChange} value={actionState}>
+                <select onChange={onActionChange} value={actionState} className="selectActions">
                     <option value=''>select</option>
                     <option value="new">New Task</option>
                     <option value="inprogress">In Progress</option>
@@ -38,8 +38,8 @@ const Actions = (props)=> {
                 </select>
             </div>
             <div className="actions">
-                Select the labels for the items{' '}
-                <select onChange={onLabelChange} value={labelState}>
+                Add labels to the tasks{' '}
+                <select onChange={onLabelChange} value={labelState} className="selectActions">
                     <option value="">select</option>
                     <option value="Personal">Personal</option>
                     <option value="Work">Work</option>

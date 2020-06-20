@@ -4,7 +4,11 @@ import '../styles/HeaderLink.css';
 const HeaderLink = (props) => {
     const getLogoutOnHome = ()=>{
         if(props.history!==undefined){
-            return <button className="headerLinks logoutButton" onClick={props.handleLogout}>logout</button>
+            return (
+                <button className="headerLinks logoutButton" onClick={props.handleLogout}>
+                <i className="fas fa-sign-out-alt"></i> logout
+                </button>
+            )
         }
     }
 

@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import Header from '../common/Header';
+import Footer from '../common/Footer';
 import AddTodo from '../AddTodo';
 import Todos from '../Todos';
 import axios from 'axios';
@@ -183,6 +184,7 @@ const Home = (props) => {
                 delTodo={delTodo}
                 deleteLabelsOnTodo={deleteLabelsOnTodo}
             />
+            <Footer />
         </div>
     )
 }
