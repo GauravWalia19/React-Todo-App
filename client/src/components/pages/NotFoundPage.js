@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from '../common/Footer';
 import {Link} from 'react-router-dom';
 import '../styles/NotFoundPage.css';
 
@@ -12,16 +11,21 @@ const NotFoundPage = () => {
                     <h2>Page Not Found !!!</h2>
                 </div>
                 <div className="notFoundInnerDiv">
-                    <i class="fas fa-8x fa-unlink"></i>
+                    <i className="fas fa-8x fa-unlink"></i>
                 </div>
                 <div>
                     <h3 className="notFoundLink">Available pages</h3>
-                    <Link to="/login" className="notFoundLink">LOGIN</Link>
-                    <Link to="/register" className="notFoundLink">SIGNUP</Link>
-                    <Link to="/" className="notFoundLink">HOME</Link>
+                    <Link to="/" className="notFoundLink">
+                        <i className="fas fa-link"></i> HOME
+                    </Link>
+                    <Link to="/login" className="notFoundLink">
+                        <i className="fas fa-link"></i> LOGIN
+                    </Link>
+                    <Link to="/register" className="notFoundLink">
+                        <i className="fas fa-link"></i> SIGNUP
+                    </Link>
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }

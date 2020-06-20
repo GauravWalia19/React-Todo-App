@@ -1,7 +1,7 @@
 .notFoundDiv{
     background-color: #f4f4f4;
-    border: 5px #ccc dotted;
-    min-height: 90vh;
+    border: 5px #61DBFB dotted;
+    min-height: 100vh;
     text-align: center;
 }
 .notFoundInnerDiv{
@@ -14,4 +14,9 @@
     padding: 20px;
     text-decoration: underline;
     font-weight: bold;
+    font-size: 1.2em;
+}
+.fa-link,
+.fa-unlink{
+    color: #61DBFB;
 }
